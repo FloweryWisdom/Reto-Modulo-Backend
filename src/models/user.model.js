@@ -25,16 +25,16 @@ const userSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
-  created_at: {
+  created: {
     type: Date,
     required: true,
     default: new Date()
   },
-  /* updated_at: {
+  updated: {
     type: Date,
     required: true,
     default: new Date()
-  } */
+  }
 })
 
 module.exports = mongoose.model(`user`, userSchema)

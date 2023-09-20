@@ -1,4 +1,4 @@
-const userModel = require(`../models/users.model`)
+const userModel = require(`../models/user.model`)
 const createError = require(`http-errors`)
 const jwt = require(`../lib/jwt`)
 const bcrypt = require(`../lib/bcrypt`)

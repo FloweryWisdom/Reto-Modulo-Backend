@@ -1,15 +1,24 @@
-const userModel = require(`../models/users.model`)
+const userModel = require(`../models/user.model`)
 const mongoose = require(`mongoose`)
 const createError = require(`http-errors`)
 const bcrypt = require(`../lib/bcrypt`)
 
-// GET /users
-async function getAll() {
-  const allUsers = await userModel.find()
-  return allUsers
-}
+// GET /user/:id
+async function getById(id) {
+  if (!mongoose.isValidObjectId(id)) {
+    throw new createError(400, `Invalid user id`)
+  }
+  
+  const user = await userModel.findById(id)
+  
+  if (!user) {
+    throw new createError(404, `User not found`)
+  }
 
-// POST /users
+  return user
+}
+  
+// POST /user
 async function createOne(user) {
   //validate if user exists
   const userExists = await userModel.findOne({ email: user.email })
@@ -31,7 +40,24 @@ async function createOne(user) {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 module.exports = {
-  getAll,
-  createOne
+  getById,
+  createOne,
 }
