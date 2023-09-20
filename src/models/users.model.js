@@ -16,6 +16,7 @@ const userSchema = new mongoose.Schema({
   },
   email: {
     type: String,
+    match: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,
     required: true,
     trim: true
   },
@@ -29,11 +30,11 @@ const userSchema = new mongoose.Schema({
     required: true,
     default: new Date()
   },
-  updated_at: {
+  /* updated_at: {
     type: Date,
     required: true,
     default: new Date()
-  }
+  } */
 })
 
 module.exports = mongoose.model(`user`, userSchema)

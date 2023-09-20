@@ -1,7 +1,7 @@
-const userModel = require(`../models/user.model`)
+const userModel = require(`../models/users.model`)
 const createError = require(`http-errors`)
-const jwt = require(`..lib/jwt`)
-const bcrypt = require(`bcryptjs`)
+const jwt = require(`../lib/jwt`)
+const bcrypt = require(`../lib/bcrypt`)
 
 async function login(email, password) {
   const user = await userModel.findOne({ email})
@@ -21,4 +21,6 @@ async function login(email, password) {
   return token
 }
 
-module.exports = login 
+module.exports = {
+  login
+}

@@ -8,7 +8,7 @@ function encrypt (text) {
 }
 
 //verify is a function that receives a text and a hash and returns true if the text matches the hash
-function verify (text, hash) {
+function verify (hash, text) {
   return bcryptjs.compareSync(text, hash)
 }
 

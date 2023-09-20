@@ -23,3 +23,29 @@ router.get(`/`, authMiddleware, async (request, response) => {
     })
   }
 })
+
+// Create a new user -- POST 
+router.post(`/`, async (request, response) => {
+  try {
+    const user = request.body
+    const newUser = await usersUseCase.createOne(user)
+
+    response.status(201)
+    response.json({
+      message: `User created`,
+      data: {
+        user: newUser
+      }
+    })
+  } catch (error) {
+    const status = error.name === `ValidationError` ? 400 : 500
+    response.status(status)
+    response.json({
+      message: `Something went wrong`,
+      error: error.message
+    })
+  }
+})
+
+
+module.exports = router

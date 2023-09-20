@@ -24,5 +24,14 @@ async function createOne(user) {
     throw new createError(400, `Password must have at least 8 characters, one uppercase letter, one lowercasde letter, one number and one special character`)
   }
 
+  //save encrypted password
+  user.password = bcrypt.encrypt(user.password)
 
+  return newUser = await userModel.create(user)
+}
+
+
+module.exports = {
+  getAll,
+  createOne
 }
