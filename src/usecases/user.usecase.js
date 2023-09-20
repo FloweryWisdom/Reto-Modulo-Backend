@@ -39,24 +39,6 @@ async function createOne(user) {
   return newUser = await userModel.create(user)
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 module.exports = {
   getById,
   createOne,
