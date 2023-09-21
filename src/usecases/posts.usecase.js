@@ -5,17 +5,18 @@ const userModel = require(`../models/user.model`)
 
 // POST /posts
 async function createOne(post) {
-  //validate whether id has a valid format
-  if (!mongoose.isValidObjectId(post.user)) {
+
+  //validate if user id has a valid format
+ /*  if (!mongoose.isValidObjectId(post.user)) {
     throw new createError(400, `Invalid user id`)
   }
 
-  //validate whether user exists in database
+  //validate is user exists in database
   const user = await userModel.findById(post.user)
 
   if (!user) {
     throw new createError(404, `User not found`)
-  }
+  } */
 
   return newPost = await postModel.create(post)
 }

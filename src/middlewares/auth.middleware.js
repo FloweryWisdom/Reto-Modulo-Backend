@@ -10,9 +10,12 @@ function auth(request, response, next) {
     }
     const token = authorization.replace("Bearer ", "")
     const payload = jwt.verify(token)
+    console.log("JWT Paload", payload)
     if (!payload) {
       throw new createError(401, `Could not verify token`)
     }
+
+    request.user = payload
 
     next()
   } catch (error) {
