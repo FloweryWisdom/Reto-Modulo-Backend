@@ -6,38 +6,73 @@ const userModel = require(`../models/user.model`)
 // POST /posts
 async function createOne(post) {
 
-  //validate if user id has a valid format
- /*  if (!mongoose.isValidObjectId(post.user)) {
-    throw new createError(400, `Invalid user id`)
-  }
-
-  //validate is user exists in database
-  const user = await userModel.findById(post.user)
-
-  if (!user) {
-    throw new createError(404, `User not found`)
-  } */
-
   return newPost = await postModel.create(post)
 }
 
-// GET /posts/:id
-async function getById(id) {
+// GET /posts/
+async function getAll(titleFilter, user) {
+  const filters = {}
+
+  if (titleFilter) {
+    filters.title = new RegExp(titleFilter, `i`)
+  }
+
+  if (user && mongoose.isValidObjectId(user)) {
+    filters.user = user
+  }
+
+  const allPosts = await postModel.find(filters).populate({
+    path: `user`,
+    select: `name`
+  })
+  return allPosts
+} 
+
+
+// PATCH /posts/:id
+async function updatePostById(id, updatedPost) {
   if (!mongoose.isValidObjectId(id)) {
     throw new createError(400, `Invalid post id`)
   }
 
-  const post = await postModel.findById(id)
+  if (updatedPost.user) {
+    throw new createError(403, `Not allowed to change the author of the post`)
+  }
 
-  if (!post) {
+  updatedPost.updated = new Date()
+
+  const modifiedPost = await postModel.findByIdAndUpdate(id, updatedPost, {
+    new: true,
+    runValidators: true
+  })
+
+  if (!modifiedPost) {
     throw new createError(404, `Post not found`)
   }
 
-  return post 
+  return modifiedPost
+
+}
+
+// DELETE /posts/:id
+async function deletePostById(id) {
+  if (!mongoose.isValidObjectId(id)) {
+    throw new createError(400, `Invalid post id`)
+  }
+
+  const deletedPost = await postModel.findByIdAndDelete(id) 
+
+  if(!deletedPost) {
+    throw new createError(404, `Post not found`)
+  }
+
+  return deletedPost
 }
 
 
 module.exports = {
   createOne,
-  getById,
+  getAll,
+  updatePostById,
+  deletePostById
 }

@@ -46,7 +46,7 @@ the user who called the endpoint.          (does not require authorization)
 
 • PATCH /posts/:id                         • DELETE /posts/:id
 To allow updating a post                   To allow deleting a post
-- Must not allow changing the author       - Olny post author can use this action
+- Must not allow changing the author       - Only post author can use this action
 of the post.                               (requires authorization)
 (requires authorization)
 
